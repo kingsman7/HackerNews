@@ -1,0 +1,17 @@
+<div class="card">
+	<div class="card__container">
+		<ng-container *ngFor="let hit of hits; let i=index">
+			<div class="card__content" *ngIf="isOk(hit)">
+				<div [id]="'card'+i" class="card__body">
+					<p>{{hit.created_at | date}} by {{hit.author}}</p>
+					<a [href]="hit.story_url" target="_blank" rel="noopener noreferrer">
+						<p>{{hit.story_title}}</p>
+					</a>
+				</div>
+				<div class="col-2 card__fav">
+					<img src="/assets/iconmonstr-favorite-3.png">
+				</div>
+			</div>
+		</ng-container>
+	</div>
+</div>

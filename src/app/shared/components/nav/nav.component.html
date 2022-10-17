@@ -1,0 +1,4 @@
+<ul [ngClass]="stickyClass ? 'fixed': ''" class="list">
+	<li [routerLink]="[ '/main' ]" routerLinkActive="list__items--active" class="list__items"> <a>All</a></li>
+	<li [routerLink]="[ '/faves' ]" routerLinkActive="list__items--active" class="list__items"> <a >My Faves</a></li>
+</ul>

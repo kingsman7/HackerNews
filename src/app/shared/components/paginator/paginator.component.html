@@ -1,0 +1,13 @@
+<div class="paginator">
+	<button class="paginator--change">&lt;</button>
+	<div *ngFor="let page of pages; let i=index">
+		<button 
+			(click)="getData($event.target)"
+			class="paginator--change"
+			[ngClass]="currentPage + 1  == page ? 'paginator--active' : ''"
+			>
+			{{page}}
+		</button> 
+	</div>
+	<button class="paginator--change">&gt;</button>
+</div>
