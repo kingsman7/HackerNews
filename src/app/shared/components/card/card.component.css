@@ -2,6 +2,15 @@
     margin: 30px 0px;
 }
 
+.card__figure {
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
 .card__container {
     display: flex;
     flex-wrap: wrap;
