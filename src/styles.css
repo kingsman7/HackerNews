@@ -2,13 +2,14 @@
 html body {
   margin: 0;
   padding: 0;
+  background-color: var(--primary-color);
 }
 
 :root {
   --select-width:  9.34rem;
   --text-color: #6b6b6b;
   --text-color-secondary: #767676;
-  --primary-color: #2196F3;
+  --primary-color: #fcfcfc;
   --primary-color-text: #ffffff;
   --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --azure: #1797ff;
