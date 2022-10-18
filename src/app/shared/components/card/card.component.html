@@ -14,8 +14,8 @@
 							<p>{{hit.story_title}}</p>
 						</a>
 					</div>
-					<div class="col-2 card__fav">
-						<img src="/assets/iconmonstr-favorite-3.png">
+					<div class="col-2 card__fav" (click)="toggleFav(hit.fav, i)">
+						<img [src]="hit.fav ? '/assets/iconmonstr-favorite-3.png' : '/assets/iconmonstr-favorite-2.png'">
 					</div>
 				</div>
 			</ng-container>

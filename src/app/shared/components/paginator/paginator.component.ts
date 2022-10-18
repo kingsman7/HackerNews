@@ -27,6 +27,10 @@ export class PaginatorComponent implements OnInit {
    this.setData()
   }
 
+ /**
+  * The function setData() is a function that subscribes to the newsStore and sets the table to the
+  * newsStore
+  */
   setData() {
     this.coreService.newsStore.subscribe((news) => {
       this.table = news
@@ -34,6 +38,11 @@ export class PaginatorComponent implements OnInit {
     })
   }
 
+/**
+ * It takes the value of the page number clicked on, subtracts 1 from it, and passes it to the API
+ * service, which then returns the data for that page
+ * @param {any} ev - any - this is the event that is triggered when the user clicks on a page number.
+ */
   getData(ev: any ) {
     this.apiService.getMainData(this.table.query || '', Number(ev.innerText) - 1).subscribe({
       next: (data) => { this.coreService.newsData = data },
@@ -42,6 +51,10 @@ export class PaginatorComponent implements OnInit {
     })
   }
 
+ /**
+  * It takes the current page number, the number of pages, and the number of hits per page, and returns
+  * an array of page numbers
+  */
   countPage() {
     this.pages = []
      this.currentPage = this.table.page

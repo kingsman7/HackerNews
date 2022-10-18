@@ -30,6 +30,7 @@ export interface Hit {
     _tags:            string[];
     objectID:         string;
     _highlightResult: HighlightResult;
+    fav?:             boolean;
 }
 
 export interface Author {

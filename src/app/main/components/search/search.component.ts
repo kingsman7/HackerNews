@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ServicesService } from '../../../services/services.service';
 import { CoreService } from '../../../core/core.service';
+import { Hit } from '../../interface/interfaces';
 
 @Component({
   selector: 'app-search',
@@ -12,7 +13,7 @@ export class SearchComponent implements OnInit {
   stickyClass: boolean = false
   stayClass: boolean = false
   tag: string | null = null
-  isOpen:boolean =  false
+  isOpen: boolean = false
   selected: string = 'Select your news'
 
   constructor(
@@ -23,8 +24,11 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.setData()
   }
-
-  handlerSelect(){
+  
+  /**
+   * If the dropdown is open, close it. If the dropdown is closed, open it
+   */
+  handlerSelect() {
     this.isOpen = !this.isOpen
   }
 
@@ -32,14 +36,15 @@ export class SearchComponent implements OnInit {
    * We're setting the value of the search bar to the query that was stored in local storage
    */
   setData() {
-    this.selectValue = JSON.parse(localStorage.getItem('data') || `[]` )?.query
+    this.selectValue = JSON.parse(localStorage.getItem('data') || `[]`)?.query
   }
 
+
   /**
-   * It takes the value of the search input, clears the local storage, and then calls the getMainData
-   * function from the apiServices service
-   * @param {any} event - any - the event that is triggered when the user selects a value from the
-   * dropdown.
+   * It takes a string as an argument, clears the local storage, calls the getMainData function from
+   * the apiServices service, and then sets the local storage with the data returned from the
+   * apiServices service
+   * @param {string} option - string - The option selected by the user.
    */
   getData(option: string) {
     this.selected = option
@@ -47,7 +52,7 @@ export class SearchComponent implements OnInit {
     this.apiServices.getMainData(option, 0).subscribe({
       next: (data) => {
         localStorage.setItem('data', JSON.stringify(data))
-        localStorage.setItem('hits', JSON.stringify(data.hits))
+        localStorage.setItem('hits', JSON.stringify(this.addFav(data.hits)))
         this.coreService.newsData = JSON.parse(localStorage.getItem('data') || `[]`)
         this.coreService.hitData = JSON.parse(localStorage.getItem('hits') || `[]`)
       },
@@ -56,6 +61,24 @@ export class SearchComponent implements OnInit {
     })
   }
 
+  /**
+   * It takes an array of hits, maps over them, sets the fav property to false, and returns the array of
+   * hits
+   * @param {Hit[]} hits - Hit[] - this is the array of objects that we are mapping over.
+   * @returns An array of objects with a new property called fav.
+   */
+  addFav(hits: Hit[]): Hit[] {
+    return hits.map((hit) => {
+      hit.fav = false
+      return hit
+    })
+  }
+
+  /**
+   * The scroll function takes an element and a number as arguments, and scrolls the element into view
+   * @param {HTMLElement} el - HTMLElement - The element that you want to scroll to.
+   * @param {number} tap - number - This is the number of times the user has tapped the element.
+   */
   scroll(el: HTMLElement, tap: number) {
     this.tag = el.getAttribute('id');
     el.scrollIntoView();
