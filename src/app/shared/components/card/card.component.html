@@ -9,7 +9,7 @@
 			<ng-container *ngFor="let hit of hits; let i=index">
 				<div class="card__content" *ngIf="isOk(hit)">
 					<div [id]="'card'+i" class="card__body">
-						<p>{{hit.created_at | date}} by {{hit.author}}</p>
+						<p>{{hit.created_at | diff}} by {{hit.author}}</p>
 						<a [href]="hit.story_url" target="_blank" rel="noopener noreferrer">
 							<p>{{hit.story_title}}</p>
 						</a>
