@@ -9,6 +9,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { CardComponent } from './components/card/card.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { DiffPipe } from './pipes/diff.pipe';
+import { SwitchInputComponent } from './components/switch-input/switch-input.component';
 
 
 
@@ -18,7 +19,8 @@ import { DiffPipe } from './pipes/diff.pipe';
     NavComponent,
     CardComponent,
     PaginatorComponent,
-    DiffPipe
+    DiffPipe,
+    SwitchInputComponent
   ],
   imports: [
     CommonModule,

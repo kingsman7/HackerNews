@@ -1,8 +1,39 @@
 .header {
-	background-image: linear-gradient(to bottom, #ececec -32%, #fff 124%);
-	padding: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-image: linear-gradient(to bottom, var(--top-gradient) -32%, var(--bottom-gradient) 124%);
+	padding: 5px 11%;
 }
 
-h1 {
-	padding-left: 11%;
+.header h1 {
+	color: var(--brand-color);
 }
+
+.header__brand {
+	display: flex;
+	align-items: center;
+}
+
+.header__img {
+	border-radius: 50%;
+	width: 40px;
+	padding: 0px 20px;
+}
+
+@media screen and (max-width:500px) {
+	.header {
+		padding: 5px 30px;
+	}
+}
+
+@media screen and (max-width:450px) {
+	.header h1 {
+		font-size: 1em;
+	}
+
+	.header__img {
+		width: 30px;
+	}
+}
+
