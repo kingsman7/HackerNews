@@ -10,7 +10,7 @@ import { News, Hit } from '../../interface/interfaces';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit ,AfterViewInit, OnDestroy {
+export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* Setting the threshold for the IntersectionObserver. */
   private options = {
@@ -33,19 +33,31 @@ export class MainComponent implements OnInit ,AfterViewInit, OnDestroy {
     this.getMainData()
   }
 
+  /**
+   * If there is data in local storage, set the newsData and hitData properties of the coreService to
+   * the data in local storage
+   */
   getMainData() {
-    if(JSON.parse(localStorage.getItem('data') || '{}')) {
+    if (JSON.parse(localStorage.getItem('data') || '{}')) {
       this.coreService.newsData = JSON.parse(localStorage.getItem('data') || '{}')
       this.coreService.hitData = JSON.parse(localStorage.getItem('data') || '{}')?.hits
     }
   }
 
   ngAfterViewInit(): void {
+    this.setMainData()
+  }
+
+  /**
+   * The function is called when the component is loaded. It subscribes to the newsStore and when the
+   * newsStore is updated, it sets the news variable to the new value
+   */
+  setMainData() {
     this.subs = this.coreService.newsStore.subscribe((news) => {
       this.memoryLead = []
       this.news = news
       setTimeout(() => {
-        if(Object.entries(this.news).length > 0) {
+        if (Object.entries(this.news).length > 0) {
           this.getElement()
         }
       }, this.TIMEOUT);
@@ -82,12 +94,18 @@ export class MainComponent implements OnInit ,AfterViewInit, OnDestroy {
       next: ({ hits }) => {
         this.memoryLead = [
           ...this.memoryLead,
-          ...hits
+          ...hits.map((hit) => {
+            hit.fav = false
+            return hit
+          })
         ]
+
         this.coreService.hitData = this.memoryLead
       },
       error: (err) => { console.error(err); },
       complete: () => {
+        console.log('hola');
+
         setTimeout(() => {
           this.getElement()
         }, this.TIMEOUT);
