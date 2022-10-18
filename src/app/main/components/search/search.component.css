@@ -5,9 +5,9 @@
 
 .select__list {
     width: var(--select-width);
-    background-color: #fff;
+    background-color: var(--bottom-gradient);
     padding-left: 0px;
-    border: 1px solid #dad8d8;
+    border: 1px solid var(--border-select);
     position: absolute;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .select__list__items:hover {
-    background-color: #ececec;
+    background-color: var(--top-gradient);
 }
 
 .select__list__items img{
@@ -38,7 +38,7 @@
     width: 100%;
     padding: 6px 8px;
     box-sizing: border-box;
-    background-color: #fff;
+    background-color: var(--bottom-gradient);
     border-radius: 4px;
     border: 1px solid var(--text-color);
 }
