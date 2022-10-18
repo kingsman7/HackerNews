@@ -8,6 +8,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
 import { CardComponent } from './components/card/card.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { DiffPipe } from './pipes/diff.pipe';
 
 
 
@@ -16,7 +17,8 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     HeaderComponent,
     NavComponent,
     CardComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    DiffPipe
   ],
   imports: [
     CommonModule,
