@@ -63,5 +63,19 @@
 @media screen and (max-width: 630px) {
     .sticky {
         top: 60px;
+        width: 78% !important;
+    }
+    
+    .sticky .select__list {
+        width: 99% !important;
+    }
+
+    .select {
+        width: 99%;
+        padding: 30px 0px 16px 0px;
+    }
+    
+    .select__list {
+        width: 78%;
     }
 }
