@@ -3,7 +3,7 @@
     top: 0;
     font-size: 30px;
     color: white;
-    background-color: #fcfcfc;
+    background-image: linear-gradient(to bottom, var(--top-gradient) -32%, var(--bottom-gradient) 124%);
 }
 
 .list {
@@ -15,7 +15,7 @@
 }
 
 .list__items {
-    border: 1px solid #d6d6d6;
+    border: 1px solid var(--border-nav);
     color: var(--text-color);
     width: 6.125rem;
     height: 1.938rem;
@@ -30,7 +30,8 @@
 
 .list__items--active {
     border: 1px solid var(--azure);
-    color: var(--azure);
+    color: var(--azure-text);
+    background-color: var(--azure-active);
     width: 6.125rem;
     height: 1.938rem;
     list-style: none;
