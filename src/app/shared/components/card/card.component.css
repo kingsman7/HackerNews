@@ -69,3 +69,15 @@
 p {
     margin: 0.44rem;
 }
+
+@media screen and (max-width: 500px) {
+    .card__figure__img {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .card__figure__img {
+        width: 100%;
+    }
+}
