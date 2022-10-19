@@ -46,7 +46,7 @@ export class PaginatorComponent implements OnInit {
   getData(ev: any ) {
     this.apiService.getMainData(this.table.query || '', Number(ev.innerText) - 1).subscribe({
       next: (data) => { this.coreService.newsData = data },
-      error: (err) => { console.error(err); },
+      error: (err) => { console.log(" ~ file: paginator.component.ts ~ line 49 ~ PaginatorComponent ~ this.apiService.getMainData ~ err", err); },
       complete: () => { }
     })
   }

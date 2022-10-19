@@ -11,16 +11,17 @@ import { CoreService } from '../../../core/core.service';
 })
 export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  private options = {
+  private options: IntersectionObserverInit = {
     rootMargin: '0px',
     threshold: 1
   }
   subs!: Subscription
   news!: News
   memoryLead: Hit[] = JSON.parse(localStorage.getItem('hits') || '[]')
-  card!: any
+  card: Element = document.createElement('div')
   TIMEOUT: number = 1000
   page: number = 0
+  isLoading:boolean = false
 
   constructor(
     private coreService: CoreService,
@@ -30,6 +31,15 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.getFaves()
   }
+
+  ngAfterViewInit(): void {
+    this.setFavData()
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
+  }
+
 
   /**
    * The function gets the faves from the local storage and sets the newsData and hitData to the faves
@@ -43,7 +53,7 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
         this.coreService.newsData = JSON.parse(localStorage.getItem('faves') || '[]')
         this.coreService.hitData = JSON.parse(localStorage.getItem('favesHits') || '[]')
       },
-      error: (err) => { console.log("~ file: faves.component.ts ~ line 43 ~ FavesComponent ~ this.apiService.getFaves ~ err", err) },
+      error: (err) => { console.log("~ file: faves.component.ts ~ line 55 ~ FavesComponent ~ this.apiService.getFaves ~ err", err) },
       complete: () => { }
     })
   }
@@ -61,10 +71,6 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  ngAfterViewInit(): void {
-    this.setFavData()
-  }
-
   /**
    * The function is called when the user clicks on the favorite button. The function then subscribes
    * to the newsStore and stores the news in the memoryLead array
@@ -79,10 +85,6 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  ngOnDestroy(): void {
-    this.subs.unsubscribe()
-  }
-
   /**
    * The function creates a new IntersectionObserver object, which takes two arguments: a callback
    * function and an options object. The callback function takes two arguments: entries and observer.
@@ -93,7 +95,7 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
    * stops observing the element. The Observer.observe() method observes the element
    */
   lazy() {
-    const Observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entrie => {
         if (entrie.isIntersecting) {
           this.getData()
@@ -101,24 +103,27 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       })
     }, this.options)
-    Observer.observe(this.card)
+    observer.observe(this.card)
   }
-
 
   /**
    * The function gets the data from the API and stores it in the memoryLead array
    */
   getData() {
+    this.isLoading = true
     this.apiService.getFaves(this.news.page + 1).subscribe({
-      next: ({ hits }) => {
+      next: (news) => {
+        this.news = news
         this.memoryLead = [
           ...this.memoryLead,
-          ...hits
+          ...news.hits
         ]
         this.coreService.hitData = this.memoryLead
       },
-      error: (err) => { console.error(err); },
+      error: (err) => { console.log(" ~ file: faves.component.ts ~ line 120 ~ FavesComponent ~ this.apiService.getFaves ~ err", err); },
+      
       complete: () => {
+        this.isLoading = false
         setTimeout(() => {
           this.getElement()
         }, this.TIMEOUT);
@@ -130,7 +135,7 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
    * It gets the last element of the card container and then calls the lazy function.
    */
   getElement() {
-    this.card = document.querySelector('.card__container')?.lastElementChild
+    this.card = document.querySelector('.card__container')?.lastElementChild || this.card
     this.lazy()
   }
 }
