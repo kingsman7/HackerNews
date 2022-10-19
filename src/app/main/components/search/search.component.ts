@@ -39,6 +39,7 @@ export class SearchComponent implements OnInit {
     this.selectValue = JSON.parse(localStorage.getItem('data') || `[]`)?.query
   }
 
+
   /**
    * It takes a string as an argument, clears the local storage, calls the getMainData function from
    * the apiServices service, and then sets the local storage with the data returned from the
