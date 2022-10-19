@@ -70,8 +70,13 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * A function that is used to lazy load data.
-   * @returns The last element in the NodeList of card elements.
+   * The function creates a new IntersectionObserver object, which takes two arguments: a callback
+   * function and an options object. The callback function takes two arguments: entries and observer.
+   * The entries argument is an array of all the elements that are being observed. The observer argument
+   * is the IntersectionObserver object itself. The callback function loops through the entries array
+   * and checks if the element is intersecting. If it is, the function calls the getData() function,
+   * which fetches the data from the API and appends it to the DOM. The observer.unobserve() method
+   * stops observing the element. The Observer.observe() method observes the element
    */
   lazy() {
     const observer = new IntersectionObserver((entries, observer) => {
@@ -101,7 +106,6 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
             return hit
           })
         ]
-
         this.coreService.hitData = this.memoryLead
       },
       error: (err) => { console.log("🚀 ~ file: main.component.ts ~ line 104 ~ MainComponent ~ this.apiService.getMainData ~ err", err); },
