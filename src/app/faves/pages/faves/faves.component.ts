@@ -80,7 +80,9 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.memoryLead = []
       this.news = news
       setTimeout(() => {
-        this.getElement()
+        if(Object.entries(news).length > 0) {
+          this.getElement()
+        }
       }, this.TIMEOUT);
     })
   }
@@ -98,8 +100,8 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entrie => {
         if (entrie.isIntersecting) {
-          this.getData()
           observer.unobserve(this.card)
+          this.getData()
         }
       })
     }, this.options)
@@ -116,12 +118,14 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
         this.news = news
         this.memoryLead = [
           ...this.memoryLead,
-          ...news.hits
+          ...news.hits.map((hit) => {
+            hit.fav = true
+            return hit
+          })
         ]
         this.coreService.hitData = this.memoryLead
       },
       error: (err) => { console.log(" ~ file: faves.component.ts ~ line 120 ~ FavesComponent ~ this.apiService.getFaves ~ err", err); },
-      
       complete: () => {
         this.isLoading = false
         setTimeout(() => {
