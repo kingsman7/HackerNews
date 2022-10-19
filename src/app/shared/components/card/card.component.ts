@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Hit } from 'src/app/main/interface/interfaces';
-import { CoreService } from '../../../core/core.service';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Subscription } from 'rxjs'
+import { Hit } from 'src/app/main/interface/interfaces'
+import { CoreService } from '../../../core/core.service'
 
 @Component({
   selector: 'app-card',
@@ -10,10 +10,10 @@ import { CoreService } from '../../../core/core.service';
 })
 export class CardComponent implements OnInit, OnDestroy {
 
-  subs!: Subscription;
-  hits: Hit[] = [];
+  subs!:  Subscription
+  hits:   Hit[] = []
   favIcon:boolean = false
-  img:string = '/assets/iconmonstr-favorite-3.png'
+  img:    string = '/assets/iconmonstr-favorite-3.png'
 
   constructor(private coreService:CoreService) { }
 

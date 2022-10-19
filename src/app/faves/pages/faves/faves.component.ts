@@ -1,8 +1,8 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Hit, News } from 'src/app/main/interface/interfaces';
-import { ServicesService } from 'src/app/services/services.service';
-import { CoreService } from '../../../core/core.service';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core'
+import { Subscription } from 'rxjs'
+import { Hit, News } from 'src/app/main/interface/interfaces'
+import { ServicesService } from 'src/app/services/services.service'
+import { CoreService } from '../../../core/core.service'
 
 @Component({
   selector: 'app-faves',
@@ -25,11 +25,11 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private coreService: CoreService,
-    private apiService: ServicesService
+    private apiService: ServicesService,
   ) { }
 
   ngOnInit(): void {
-    this.getFaves()
+    this.init()
   }
 
   ngAfterViewInit(): void {
@@ -44,16 +44,18 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * The function gets the faves from the local storage and sets the newsData and hitData to the faves
    */
-  getFaves() {
+  init() {
     localStorage.clear
-    this.apiService.getFaves(this.page).subscribe({
+    this.apiService.getMainData('faves',this.page).subscribe({
       next: (news) => {
         localStorage.setItem('faves', JSON.stringify(news))
         localStorage.setItem('favesHits', JSON.stringify(this.addFav(news.hits)))
         this.coreService.newsData = JSON.parse(localStorage.getItem('faves') || '[]')
         this.coreService.hitData = JSON.parse(localStorage.getItem('favesHits') || '[]')
       },
-      error: (err) => { console.log("~ file: faves.component.ts ~ line 55 ~ FavesComponent ~ this.apiService.getFaves ~ err", err) },
+      error: (err) => {
+        console.log("~ file: faves.component.ts ~ line 55 ~ FavesComponent ~ this.apiService.getMainData 'faves',~ err", err) 
+      },
       complete: () => { }
     })
   }
@@ -83,7 +85,7 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
         if(Object.entries(news).length > 0) {
           this.getElement()
         }
-      }, this.TIMEOUT);
+      }, this.TIMEOUT)
     })
   }
 
@@ -113,7 +115,7 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   getData() {
     this.isLoading = true
-    this.apiService.getFaves(this.news.page + 1).subscribe({
+    this.apiService.getMainData('fave',this.news.page + 1).subscribe({
       next: (news) => {
         this.news = news
         this.memoryLead = [
@@ -125,12 +127,12 @@ export class FavesComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
         this.coreService.hitData = this.memoryLead
       },
-      error: (err) => { console.log(" ~ file: faves.component.ts ~ line 120 ~ FavesComponent ~ this.apiService.getFaves ~ err", err); },
+      error: (err) => { console.log(" ~ file: faves.component.ts ~ line 120 ~ FavesComponent ~ this.apiService.getMainData 'faves',~ err", err) },
       complete: () => {
         this.isLoading = false
         setTimeout(() => {
           this.getElement()
-        }, this.TIMEOUT);
+        }, this.TIMEOUT)
       }
     })
   }

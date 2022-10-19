@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ServicesService } from '../../../services/services.service';
-import { CoreService } from '../../../core/core.service';
-import { Hit } from '../../interface/interfaces';
+import { Component, HostListener, OnInit } from '@angular/core'
+import { ServicesService } from '../../../services/services.service'
+import { CoreService } from '../../../core/core.service'
+import { Hit } from '../../interface/interfaces'
 
 @Component({
   selector: 'app-search',
@@ -9,12 +9,12 @@ import { Hit } from '../../interface/interfaces';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  selectValue!: string;
-  stickyClass: boolean = false
-  stayClass: boolean = false
-  tag: string | null = null
-  isOpen: boolean = false
-  selected: string = 'Select your news'
+  selectValue!: string
+  stickyClass:  boolean = false
+  stayClass:    boolean = false
+  tag:          string | null = null
+  isOpen:       boolean = false
+  selected:     string = 'Select your news'
 
   constructor(
     private apiServices: ServicesService,
@@ -56,7 +56,7 @@ export class SearchComponent implements OnInit {
         this.coreService.newsData = JSON.parse(localStorage.getItem('data') || `[]`)
         this.coreService.hitData = JSON.parse(localStorage.getItem('hits') || `[]`)
       },
-      error: (err) => { console.log(" ~ file: search.component.ts ~ line 58 ~ SearchComponent ~ this.apiServices.getMainData ~ err", err); },
+      error: (err) => { console.log(" ~ file: search.component.ts ~ line 58 ~ SearchComponent ~ this.apiServices.getMainData ~ err", err) },
       complete: () => { }
     })
   }
@@ -78,11 +78,11 @@ export class SearchComponent implements OnInit {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (window.pageYOffset > 145) {
-      this.stickyClass = true;
-      this.stayClass = true;
+      this.stickyClass = true
+      this.stayClass = true
     } else {
-      this.stickyClass = false;
-      this.stayClass = false;
+      this.stickyClass = false
+      this.stayClass = false
     }
   }
 
