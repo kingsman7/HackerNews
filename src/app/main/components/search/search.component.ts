@@ -55,7 +55,7 @@ export class SearchComponent implements OnInit {
         this.coreService.newsData = JSON.parse(localStorage.getItem('data') || `[]`)
         this.coreService.hitData = JSON.parse(localStorage.getItem('hits') || `[]`)
       },
-      error: (err) => { console.error(err); },
+      error: (err) => { console.log(" ~ file: search.component.ts ~ line 58 ~ SearchComponent ~ this.apiServices.getMainData ~ err", err); },
       complete: () => { }
     })
   }
@@ -71,16 +71,6 @@ export class SearchComponent implements OnInit {
       hit.fav = false
       return hit
     })
-  }
-
-  /**
-   * The scroll function takes an element and a number as arguments, and scrolls the element into view
-   * @param {HTMLElement} el - HTMLElement - The element that you want to scroll to.
-   * @param {number} tap - number - This is the number of times the user has tapped the element.
-   */
-  scroll(el: HTMLElement, tap: number) {
-    this.tag = el.getAttribute('id');
-    el.scrollIntoView();
   }
 
   /** Function to make fixed the taps of the page when scrolling. */

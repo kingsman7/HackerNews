@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { ItemDataSource } from 'src/app/core/data-source.datasource';
 import { CoreService } from '../../../core/core.service';
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../services/services.service';
@@ -13,16 +12,17 @@ import { News, Hit } from '../../interface/interfaces';
 export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* Setting the threshold for the IntersectionObserver. */
-  private options = {
+  private options: IntersectionObserverInit = {
     root: document.querySelector('.main'),
     rootMargin: '0px',
     threshold: 1
-  }
-  subs!: Subscription
-  news!: News
-  memoryLead: Hit[] = JSON.parse(localStorage.getItem('hits') || '[]')
-  card!: any
+  };
+  subs!: Subscription;
+  news!: News;
+  memoryLead: Hit[] = JSON.parse(localStorage.getItem('hits') || '[]');
+  card: Element = document.createElement('div');
   TIMEOUT: number = 1000
+  isLoading:boolean = false
 
   constructor(
     private coreService: CoreService,
@@ -31,6 +31,15 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.getMainData()
+  }
+
+  ngAfterViewInit(): void {
+    this.setMainData()
+  }
+
+  ngOnDestroy(): void {
+    /* Unsubscribing from the subscription. */
+    this.subs.unsubscribe()
   }
 
   /**
@@ -42,10 +51,6 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       this.coreService.newsData = JSON.parse(localStorage.getItem('data') || '{}')
       this.coreService.hitData = JSON.parse(localStorage.getItem('data') || '{}')?.hits
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.setMainData()
   }
 
   /**
@@ -64,17 +69,12 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  ngOnDestroy(): void {
-    /* Unsubscribing from the subscription. */
-    this.subs.unsubscribe()
-  }
-
   /**
    * A function that is used to lazy load data.
    * @returns The last element in the NodeList of card elements.
    */
   lazy() {
-    const Observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entrie => {
         if (entrie.isIntersecting) {
           this.getData()
@@ -82,7 +82,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       })
     }, this.options)
-    Observer.observe(this.card)
+    observer.observe(this.card)
   }
 
   /**
@@ -90,11 +90,13 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
    * service
    */
   getData() {
+    this.isLoading = true
     this.apiService.getMainData(this.news.query || '', this.news.page + 1).subscribe({
-      next: ({ hits }) => {
+      next: (news) => {
+        this.news = news
         this.memoryLead = [
           ...this.memoryLead,
-          ...hits.map((hit) => {
+          ...news.hits.map((hit) => {
             hit.fav = false
             return hit
           })
@@ -102,10 +104,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.coreService.hitData = this.memoryLead
       },
-      error: (err) => { console.error(err); },
+      error: (err) => { console.log("🚀 ~ file: main.component.ts ~ line 104 ~ MainComponent ~ this.apiService.getMainData ~ err", err); },
       complete: () => {
-        console.log('hola');
-
+        this.isLoading = false
         setTimeout(() => {
           this.getElement()
         }, this.TIMEOUT);
@@ -114,7 +115,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getElement() {
-    this.card = document.querySelector('.card__container')?.lastElementChild
+    this.card = document.querySelector('.card__container')?.lastElementChild || this.card
     this.lazy()
   }
 

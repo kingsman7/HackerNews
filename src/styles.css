@@ -41,7 +41,3 @@ html body {
   --bottom-dark-gradient: #2f2f30;
   --azure-dark: #1f6feb;
 }
-
-.isSelectedNone {
-  display: none;
-}
