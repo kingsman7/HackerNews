@@ -1,8 +1,8 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { CoreService } from '../../../core/core.service';
-import { Subscription } from 'rxjs';
-import { ServicesService } from '../../../services/services.service';
-import { News, Hit } from '../../interface/interfaces';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core'
+import { CoreService } from '../../../core/core.service'
+import { Subscription } from 'rxjs'
+import { ServicesService } from '../../../services/services.service'
+import { News, Hit } from '../../interface/interfaces'
 
 @Component({
   selector: 'app-main',
@@ -16,13 +16,13 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     root: document.querySelector('.main'),
     rootMargin: '0px',
     threshold: 1
-  };
-  subs!: Subscription;
-  news!: News;
-  memoryLead: Hit[] = JSON.parse(localStorage.getItem('hits') || '[]');
-  card: Element = document.createElement('div');
-  TIMEOUT: number = 1000
-  isLoading:boolean = false
+  }
+  subs!:      Subscription
+  news!:      News
+  memoryLead: Hit[] = JSON.parse(localStorage.getItem('hits') || '[]')
+  card:       Element = document.createElement('div')
+  TIMEOUT:    number = 1000
+  isLoading:  boolean = false
 
   constructor(
     private coreService: CoreService,
@@ -65,7 +65,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
         if (Object.entries(this.news).length > 0) {
           this.getElement()
         }
-      }, this.TIMEOUT);
+      }, this.TIMEOUT)
     })
   }
 
@@ -108,12 +108,12 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
         this.coreService.hitData = this.memoryLead
       },
-      error: (err) => { console.log("🚀 ~ file: main.component.ts ~ line 104 ~ MainComponent ~ this.apiService.getMainData ~ err", err); },
+      error: (err) => { console.log("🚀 ~ file: main.component.ts ~ line 104 ~ MainComponent ~ this.apiService.getMainData ~ err", err) },
       complete: () => {
         this.isLoading = false
         setTimeout(() => {
           this.getElement()
-        }, this.TIMEOUT);
+        }, this.TIMEOUT)
       }
     })
   }
