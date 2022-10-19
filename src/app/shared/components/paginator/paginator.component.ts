@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { News } from 'src/app/main/interface/interfaces';
-import { CoreService } from '../../../core/core.service';
-import { ServicesService } from '../../../services/services.service';
+import { Component, OnInit } from '@angular/core'
+import { News } from 'src/app/main/interface/interfaces'
+import { CoreService } from '../../../core/core.service'
+import { ServicesService } from '../../../services/services.service'
 
 @Component({
   selector: 'app-paginator',
@@ -10,13 +10,13 @@ import { ServicesService } from '../../../services/services.service';
 })
 export class PaginatorComponent implements OnInit {
 
-  table!:News
-  currentPage: number = 0;
-  hitsPerPage: number = 0;
-  totalPage: number = 0;
-  start: number = 0;
-  end: number = 0;
-  pages: number[] = []
+  table!:      News
+  currentPage: number = 0
+  hitsPerPage: number = 0
+  totalPage:   number = 0
+  start:       number = 0
+  end:         number = 0
+  pages:       number[] = []
 
   constructor( 
     private apiService:ServicesService,
@@ -46,7 +46,7 @@ export class PaginatorComponent implements OnInit {
   getData(ev: any ) {
     this.apiService.getMainData(this.table.query || '', Number(ev.innerText) - 1).subscribe({
       next: (data) => { this.coreService.newsData = data },
-      error: (err) => { console.log(" ~ file: paginator.component.ts ~ line 49 ~ PaginatorComponent ~ this.apiService.getMainData ~ err", err); },
+      error: (err) => { console.log(" ~ file: paginator.component.ts ~ line 49 ~ PaginatorComponent ~ this.apiService.getMainData ~ err", err) },
       complete: () => { }
     })
   }

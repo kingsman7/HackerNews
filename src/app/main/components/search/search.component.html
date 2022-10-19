@@ -1,27 +1,20 @@
 <div [ngClass]="stickyClass ? 'sticky': ''" class="select" (click)="handlerSelect()">
-	<div id="selectField">
-		<p>{{selected}}</p> <img src="/assets/expand_arrow.svg" class="select__arrow">
-	</div>
+  <div id="selectField">
+    <p>{{selected}}</p> <img src="/assets/expand_arrow.svg" class="select__arrow">
+  </div>
 
-	<ul *ngIf="isOpen" class="select__list">
-		<li class="select__list__items" (click)="getData('angular')">
-			<img src="/assets/angular-x2.png" alt="Angular">
-			{{'angular' | titlecase}}
-		</li>
-		<li class="select__list__items" (click)="getData('react')">
-			<img src="/assets/react-x2.png" alt="React">
-			{{'react' | titlecase}}
-		</li>
-		<li class="select__list__items" (click)="getData('vue')">
-			<img src="/assets/vue-x2.png" alt="Vue">
-			{{'vue' | titlecase}}
-		</li>
-	</ul>
-
-	<!-- <option [selected]="selectValue === 'angular'" value="angular"> 
-	</option>
-	<option [selected]="selectValue === 'react'" value="react"> 
-	</option>
-	<option [selected]="selectValue === 'vue'" value="vue"> 
-	</option> -->
+  <ul *ngIf="isOpen" class="select__list">
+    <li class="select__list__items" (click)="getData('angular')">
+      <img src="/assets/angular-x2.png" alt="Angular">
+      {{'angular' | titlecase}}
+    </li>
+    <li class="select__list__items" (click)="getData('react')">
+      <img src="/assets/react-x2.png" alt="React">
+      {{'react' | titlecase}}
+    </li>
+    <li class="select__list__items" (click)="getData('vue')">
+      <img src="/assets/vue-x2.png" alt="Vue">
+      {{'vue' | titlecase}}
+    </li>
+  </ul>
 </div>

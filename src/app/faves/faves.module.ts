@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
 
-import { FavesRoutingModule } from './faves-routing.module';
-import { FavesComponent } from './pages/faves/faves.component';
-import { SharedModule } from '../shared/shared.module';
+import { FavesRoutingModule } from './faves-routing.module'
+import { FavesComponent } from './pages/faves/faves.component'
+import { SharedModule } from '../shared/shared.module'
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
-    FavesRoutingModule
+    FavesRoutingModule,
   ]
 })
 export class FavesModule { }
