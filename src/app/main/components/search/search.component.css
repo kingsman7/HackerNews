@@ -22,7 +22,7 @@
 }
 
 .select__list__items:hover {
-    background-color: var(--top-gradient);
+    background-color: var(--hover-color);
 }
 
 .select__list__items img{
