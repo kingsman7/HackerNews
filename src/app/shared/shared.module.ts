@@ -10,6 +10,7 @@ import { CardComponent } from './components/card/card.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { DiffPipe } from './pipes/diff.pipe';
 import { SwitchInputComponent } from './components/switch-input/switch-input.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 
@@ -20,7 +21,8 @@ import { SwitchInputComponent } from './components/switch-input/switch-input.com
     CardComponent,
     PaginatorComponent,
     DiffPipe,
-    SwitchInputComponent
+    SwitchInputComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { SwitchInputComponent } from './components/switch-input/switch-input.com
     HeaderComponent,
     NavComponent,
     CardComponent,
+    LoadingComponent,
     PaginatorComponent
   ],
 })
